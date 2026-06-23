@@ -119,80 +119,45 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="index.php?page=mapel" class="nav-link">
+                  <a href="index.php?page=tamu" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Mata Pelajaran</p>
+                    <p>Data Tamu</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="index.php?page=guru" class="nav-link">
+                  <a href="index.php?page=reservasi" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Guru</p>
+                    <p>Data Reservasi</p>
                   </a>
                 </li>
             </li>
             <li class="nav-item">
-              <a href="index.php?page=kelas" class="nav-link">
+              <a href="index.php?page=tipe_kamar" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Kelas</p>
+                <p>Tipe Kamar</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="index.php?page=jadwal_kelas" class="nav-link">
+              <a href="index.php?page=kamar" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Jadwal kelas</p>
+                <p>Data Kamar</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="index.php?page=siswa" class="nav-link">
+              <a href="index.php?page=pembayaran" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Siswa</p>
+                <p>Pembayaran</p>
               </a>
             </li>
-
-            <i class="right fas fa-angle-left"></i>
-            </p>
+          </ul>
+          <li class="nav-item">
+            <a href="logout.php" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Logout
+              </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="index.php?page=user" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>User</p>
-                </a>
-              </li>
-            </ul>
-            </li>
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-              <li class="nav-item menu-open">
-                <a href="#" class="nav-link active">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    Master
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-              <li class="nav-item">
-                <a href="index.php?page=ganti_password" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Ganti password</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="index.php?page=jadwal_kelas" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Jadwal kelas</p>
-                </a>
-              </li>
-            </ul>
-            </li>
-            <li class="nav-item">
-              <a href="logout.php" class="nav-link">
-                <i class="nav-icon fas fa-sign-out-alt"></i>
-                <p>
-                  Logout
-                </p>
-              </a>
-            </li>
+          </li>
         </nav>
         <!-- /.sidebar-menu -->
       </div>
