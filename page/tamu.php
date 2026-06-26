@@ -52,8 +52,8 @@ if(isset($_GET['action'])) {
                             <tr style="text-align: center;">
                                 <td><?= $no; ?></td>
                                 <td><?= $result['Id_tamu']; ?></td>
-                                <td><?= $result['Nm_tamu']; ?></td>
-                                <td><?= $result['No_telp']; ?></td>
+                                <td><?= $result['Nama_tamu']; ?></td>
+                                <td><?= $result['No_hp']; ?></td>
                                 <td><?= $result['Email']; ?></td>
                                 <td>
                                     <a href="index.php?page=tamu&action=hapus&kd=<?= $result['Id_tamu']; ?>" title ="">
