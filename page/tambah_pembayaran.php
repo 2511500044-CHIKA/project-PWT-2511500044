@@ -37,24 +37,51 @@ if (isset($_POST['tambah'])) {
     $Tanggal_bayar = $_POST['Tanggal_bayar'];
     $Metode_bayar = $_POST['Metode_bayar'];
 
-
-    $cek = mysqli_query($koneksi, " SELECT * FROM pembayaran WHERE Id_reservasi='$Id_reservasi' ");
+    // Cek apakah reservasi sudah pernah dibayar
+    $cek = mysqli_query($koneksi, "
+    SELECT *
+    FROM pembayaran
+    WHERE Id_reservasi='$Id_reservasi'
+    ");
 
     if (mysqli_num_rows($cek) > 0) {
 
         echo '
-        <div class="alert alert-warning"> Reservasi sudah dibayar. </div>';
+        <div class="alert alert-warning">
+            Reservasi sudah dibayar.
+        </div>';
 
         $allSuccess = false;
     }
     if ($allSuccess) {
-        $Harga = mysqli_fetch_array(mysqli_query($koneksi, " SELECT tipe_kamar.Harga FROM reservasi JOIN kamar ON reservasi.Id_kamar = kamar.Id_kamar
-        JOIN tipe_kamar ON kamar.Id_tipe = tipe_kamar.Id_tipe WHERE reservasi.Id_reservasi='$Id_reservasi'"));
+        //Ambil harga kamar berdasarkan reservasi
+        $harga = mysqli_fetch_array(mysqli_query($koneksi, "
+        SELECT tipe_kamar.Harga
+        FROM reservasi
+        JOIN kamar ON reservasi.Id_kamar = kamar.Id_kamar
+        JOIN tipe_kamar ON kamar.Id_tipe = tipe_kamar.Id_tipe
+        WHERE reservasi.Id_reservasi='$Id_reservasi'
+    "));
 
-        $Total_bayar = $Harga['Harga'];
+        $Total_bayar = $harga['Harga'];
 
-        $insert = mysqli_query($koneksi, " INSERT INTO pembayaran ( Id_bayar, Id_reservasi, Tanggal_bayar, Total_bayar, Metode_bayar )
-        VALUES ( '$Id_bayar', '$Id_reservasi', '$Tanggal_bayar', '$Total_bayar', '$Metode_bayar' )
+        $insert = mysqli_query($koneksi, "
+        INSERT INTO pembayaran
+        (
+            Id_bayar,
+            Id_reservasi,
+            Tanggal_bayar,
+            Total_bayar,
+            Metode_bayar
+        )
+        VALUES
+        (
+            '$Id_bayar',
+            '$Id_reservasi',
+            '$Tanggal_bayar',
+            '$Total_bayar',
+            '$Metode_bayar'
+        )
     ");
 
         if ($insert) {
@@ -86,6 +113,7 @@ if (isset($_POST['tambah'])) {
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
+
                 <form method="POST" action="">
 
                     <div class="form-group">
@@ -96,39 +124,72 @@ if (isset($_POST['tambah'])) {
                     <div class="form-group">
                         <label>Id Reservasi</label>
                         <select name="Id_reservasi" class="form-control" required>
+
                             <option value="">Pilih Reservasi</option>
+
                             <?php
-                            $reservasi = mysqli_query($koneksi, "SELECT reservasi.Id_reservasi, tamu.Nama_tamu
-                                    FROM reservasi JOIN tamu ON reservasi.Id_tamu=tamu.Id_tamu
-                                        WHERE reservasi.Id_reservasi NOT IN (SELECT Id_reservasi FROM pembayaran)
-                                        ");
+
+                            $reservasi = mysqli_query($koneksi, "
+SELECT
+reservasi.Id_reservasi,
+tamu.Nama_tamu
+FROM reservasi
+JOIN tamu
+ON reservasi.Id_tamu=tamu.Id_tamu
+WHERE reservasi.Id_reservasi NOT IN
+(
+SELECT Id_reservasi
+FROM pembayaran
+)
+");
                             while ($r = mysqli_fetch_array($reservasi)) {
+
                             ?>
 
-                                <option value="<?= $r['Id_reservasi']; ?>"> <?= $r['Id_reservasi']; ?> - <?= $r['Nama_tamu']; ?></option>
+                                <option value="<?= $r['Id_reservasi']; ?>">
+
+                                    <?= $r['Id_reservasi']; ?> - <?= $r['Nama_tamu']; ?>
+
+                                </option>
+
                             <?php } ?>
+
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label>Tanggal Bayar</label>
-                        <input type="date" name="Tanggal_bayar" class="form-control" value="<?= date('Y-m-d'); ?>" required>
+                        <<input
+                            type="date" name="Tanggal_bayar" class="form-control" value="<?= date('Y-m-d'); ?>" required>
                     </div>
 
                     <div class="form-group">
                         <label>Metode Bayar</label>
+
                         <select name="Metode_bayar" class="form-control" required>
+
                             <option value="">Pilih Metode Bayar</option>
                             <option value="Cash">Cash</option>
                             <option value="Transfer">Transfer</option>
                             <option value="Debit">Debit</option>
+
                         </select>
+
                     </div>
 
                     <div class="card-footer">
-                        <input type="submit" class="btn btn-primary" name="tambah" value="Simpan">
 
-                        <a href="index.php?page=pembayaran" class="btn btn-danger">Batal</a>
+                        <input type="submit"
+                            class="btn btn-primary"
+                            name="tambah"
+                            value="Simpan">
+
+                        <a href="index.php?page=pembayaran"
+                            class="btn btn-danger">
+
+                            Batal
+
+                        </a>
 
                     </div>
 

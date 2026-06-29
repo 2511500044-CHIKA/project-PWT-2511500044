@@ -1,3 +1,4 @@
+
 <?php
 include "config/koneksi.php";
 ?>
@@ -5,27 +6,27 @@ include "config/koneksi.php";
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Data tamu</h1>
+                <h1 class="m-0 text-dark">Data Tamu</h1>
             </div>
         </div>
     </div>
 </div>
 
 <?php
-if(isset($_GET['action'])) {
-    if($_GET['action'] == "hapus") {
-        $Id =$_GET['Id'];
-        $query = mysqli_query($koneksi, "DELETE FROM tamu WHERE Id_tamu ='$Id'");
+if (isset($_GET['action'])) {
+    if ($_GET['action'] == "hapus") {
+        $kd = $_GET['kd'];
+        $query = mysqli_query($koneksi, "DELETE FROM tamu WHERE Id_tamu='$kd'");
         if ($query) {
             echo '
             <div class="alert alert-warning alert-dismissible">
-            Berhasil di hapus</div>';
+                Berhasil Di Hapus</div>';
             echo '<meta http-equiv="refresh" content="1;url=index.php?page=tamu">';
         }
     }
 }
 ?>
-   
+
 <div class="content">
     <div class="container-fluid">
         <div class="card">
@@ -56,10 +57,12 @@ if(isset($_GET['action'])) {
                                 <td><?= $result['No_hp']; ?></td>
                                 <td><?= $result['Email']; ?></td>
                                 <td>
-                                    <a href="index.php?page=tamu&action=hapus&kd=<?= $result['Id_tamu']; ?>" title ="">
-                                            <span class=" badge badge-danger">Hapus</span></a>
+                                    <a href="index.php?page=tamu&action=hapus&kd=<?= $result['Id_tamu']; ?>">
+                                        <span class="badge badge-danger">Hapus</span>
+                                    </a>
                                     <a href="index.php?page=edit_tamu&kd=<?= $result['Id_tamu']; ?>" title="">
-                                        <span class="badge badge-warning">Edit</span></a>
+                                        <span class="badge badge-warning">Edit</span>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>

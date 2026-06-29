@@ -75,7 +75,7 @@ if (isset($_POST['tambah'])) {
                                 <option value="1" <?= ($edit['Kapasitas'] == '1') ? 'selected' : '' ?>>1</option>
                                 <option value="2" <?= ($edit['Kapasitas'] == '2') ? 'selected' : '' ?>>2</option>
                                 <option value="3" <?= ($edit['Kapasitas'] == '3') ? 'selected' : '' ?>>3</option>
-                                <option value="4" <?= ($edit['Kapasitas'] == '6') ? 'selected' : '' ?>>4</option>
+                                <option value="4" <?= ($edit['Kapasitas'] == '4') ? 'selected' : '' ?>>4</option>
                             </select>
                         </div>
                         <div class="card-footer">
