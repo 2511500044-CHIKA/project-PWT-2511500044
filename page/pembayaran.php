@@ -1,113 +1,109 @@
 <?php
 include "config/koneksi.php";
 ?>
+
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark"> Tambah Data Pembayaran</h1>
+                <h1 class="m-0 text-dark">Data Pembayaran</h1>
             </div>
         </div>
     </div>
 </div>
 
 <?php
-$allSuccess = true;
-//kode otomatis
-$carikode = mysqli_query($koneksi, "SELECT MAX(Id_bayar) FROM pembayaran") or die(mysqli_error($koneksi));
-$datakode = mysqli_fetch_array($carikode);
-if ($datakode && $datakode[0] != null) {
-    $nilaikode = substr($datakode[0], 2);
-    $kode = (int) $nilaikode;
-    $kode = $kode + 1;
-    $hasilkode = "P-" . str_pad($kode, 3, "0", STR_PAD_LEFT);
-} else {
-    $hasilkode = "P-001";
-}
+if (isset($_GET['action'])) {
+    if ($_GET['action'] == "hapus") {
 
-$_SESSION['KODE'] = $hasilkode;
+        $Id = $_GET['Id'];
 
-if (isset($_POST['tambah'])) {
+        $query = mysqli_query($koneksi, "DELETE FROM pembayaran WHERE Id_bayar='$Id'");
 
-    $Id_bayar = $_POST['Id_bayar'];
-    $Id_reservasi = $_POST['Id_reservasi'];
-    $Total_bayar = $_POST['Total_bayar'];
-    $Metode_bayar = $_POST['Metode_bayar'];
+        if ($query) {
 
-    $insertpembayaran = mysqli_query($koneksi, "INSERT INTO pembayaran (Id_bayar, Id_reservasi, Total_bayar, Metode_bayar)
-    VALUES ('$Id_bayar', '$Id_reservasi', '$Total_bayar', '$Metode_bayar')");
+            echo '
+            <div class="alert alert-warning alert-dismissible">
+                Berhasil Di Hapus
+            </div>';
 
-    if (!$insertpembayaran) {
-        echo "Gagal insert ke tabel Pembayaran: " . mysqli_error($koneksi);
-        die;
-    }
-
-    if ($allSuccess) {
-        echo '<div class="alert alert-info alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h5><i class="icon fas fa-info"></i> Info </h5>
-        <h4>Berhasil Disimpan</h4>
-        </div>';
-
-        echo '<meta http-equiv="refresh" content="1;url=index.php?page=pembayaran">';
-    } else {
-        echo '<div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h5><i class="icon fas fa-info"></i> Info </h5>
-        <h4>Gagal menyimpan sebagian atau seluruh data detail.</h4>
-        </div>';
+            echo '<meta http-equiv="refresh" content="1;url=index.php?page=pembayaran">';
+        }
     }
 }
 ?>
+
 <div class="content">
     <div class="container-fluid">
-        <div class="card">
-            <div class="card-body">
-                <form method="POST" action="">
-                    <div class="form-group">
-                        <label>Id Pembayaran</label>
-                        <input type="text" name="Id_bayar" value="<?= $hasilkode ?>" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>Id Reservasi</label>
-                        <select name="Id_reservasi" id="Id_reservasi" class="form-control" required>
-                            <option value="">Pilih Id Reservasi</option>
-                            <?php $reservasiQuery = mysqli_query($koneksi, "SELECT * FROM reservasi");
-                            while ($reservasi = mysqli_fetch_array($reservasiQuery)) {
-                                $totalBayar = 0;
-                                $reservasiId = $reservasi['Id_reservasi']; // Ambil data reservasi terkait untuk menghitung total bayar 
 
-                                $detailReservasiQuery = mysqli_query($koneksi, "SELECT * FROM reservasi WHERE Id_reservasi='$reservasiId'");
-                                while ($detailReservasi = mysqli_fetch_array($detailReservasiQuery)) {
-                                    $totalBayar += $detailReservasi['Total_bayar'];
-                                }
-                                echo "<option value='" . $reservasi['Id_reservasi'] .
-                                    "' data-total='" . $totalBayar . "'>" . $reservasi['Id_reservasi'] . "</option>";
-                            }
-                            ?>
-                        </select>
-                        <div class="form-group">
-                            <label>Total Bayar</label>
-                            <input type="number" name="Total_bayar" id="Total_bayar" class="form-control" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label>Metode Bayar</label>
-                            <select name="Metode_bayar" class="form-control" required>
-                                <option value="">Pilih Metode Bayar</option>
-                                <option value="Cash">Cash</option>
-                                <option value="Transfer">Transfer</option>
-                            </select>
-                        </div>
-                    </div>
-                    <input type="submit" class="btn btn-primary" name="tambah" value="simpan">
-                </form>
-                <script>
-                    document.getElementById('Id_reservasi').addEventListener('change', function() {
-                        var total = this.options[this.selectedIndex].getAttribute('data-total');
-                        document.getElementById('Total_bayar').value = total || '';
-                    });
-                </script>
+        <div class="card">
+
+            <div class="card-body">
+
+                <a href="index.php?page=tambah_pembayaran" class="btn btn-primary btn-sm">
+                    Tambah Pembayaran</a>
+                <a href="index.php?page=laporan_pembayaran" class="btn btn-success btn-sm">Laporan Pembayaran</a>
+                <table class="table table-striped">
+
+                    <thead>
+
+                        <tr style="text-align:center;">
+
+                            <th>No</th>
+                            <th>Id Bayar</th>
+                            <th>Id Reservasi</th>
+                            <th>Nama Tamu</th>
+                            <th>No Kamar</th>
+                            <th>Tanggal Bayar</th>
+                            <th>Metode Bayar</th>
+                            <th>Total Bayar</th>
+                            <th>Aksi</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <?php
+                    $no = 0;
+                    $query = mysqli_query($koneksi, "SELECT pembayaran.*, tamu.Nama_tamu, kamar.Nomor_kamar FROM pembayaran JOIN reservasi
+                            ON pembayaran.Id_reservasi=reservasi.Id_reservasi JOIN tamu ON reservasi.Id_tamu=tamu.Id_tamu
+                            JOIN kamar ON reservasi.Id_kamar=kamar.Id_kamar ORDER BY pembayaran.Id_bayar DESC
+                            ");
+
+                    while ($result = mysqli_fetch_array($query)) {
+                        $no++;
+                    ?>
+                        <tbody>
+                            <tr style="text-align:center;">
+                                <td><?= $no; ?></td>
+                                <td><?= $result['Id_bayar']; ?></td>
+                                <td><?= $result['Id_reservasi']; ?></td>
+                                <td><?= $result['Nama_tamu']; ?></td>
+                                <td><?= $result['Nomor_kamar']; ?></td>
+                                <td><?= $result['Tanggal_bayar']; ?></td>
+                                <td><?= $result['Metode_bayar']; ?></td>
+                                <td>
+                                    <?= "Rp " . number_format($result['Total_bayar'], 0, ',', '.'); ?>
+                                </td>
+                                <td>
+                                    <a href="index.php?page=pembayaran&action=hapus&Id=<?= $result['Id_bayar']; ?>"
+                                        onclick="return confirm('Yakin ingin menghapus data pembayaran?')">
+                                        <span class="badge badge-danger">
+                                            Hapus
+                                        </span>
+                                    </a>
+                                    <a href="index.php?page=edit_pembayaran&Id=<?= $result['Id_bayar']; ?>">
+                                        <span class="badge badge-warning">
+                                            Edit
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    <?php } ?>
+                </table>
             </div>
+
         </div>
     </div>
 </div>
