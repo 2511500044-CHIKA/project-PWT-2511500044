@@ -2,7 +2,10 @@
 ob_start();
 session_start();
 require_once("config/koneksi.php");
-
+if (!isset($_SESSION['Username'])) {
+    header("Location: login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
