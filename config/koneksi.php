@@ -1,4 +1,6 @@
 <?php
+$username = "root";
+echo $username;
 $db_host = "localhost";
 $db_user = "root";
 $db_pass = "";

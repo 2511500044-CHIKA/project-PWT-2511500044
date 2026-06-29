@@ -2,7 +2,7 @@
 ob_start();
 session_start();
 require_once("config/koneksi.php");
-if (!isset($_SESSION['Username'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
@@ -87,10 +87,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- Sidebar user panel (optional) -->
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
-                            <img src="dist/img/diva.jpeg" class="img-circle elevation-2" alt="User Image">
+                            <img src="dist/img/chika.jpeg" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">Cintia Divanti Agustin</a>
+                            <a href="#" class="d-block">Chika zayin salsabilla</a>
                         </div>
                     </div>
 
@@ -252,5 +252,3 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- AdminLTE App -->
                 <script src="dist/js/adminlte.min.js"></script>
     </body>
-
-    </html>

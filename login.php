@@ -3,7 +3,7 @@ ob_start();
 session_start();
 require_once("config/koneksi.php");
 
-if (isset($_SESSION['Username'])) {
+if (isset($_SESSION['username'])) {
     header("Location: index.php");
     exit();
 }
@@ -38,7 +38,7 @@ if (isset($_SESSION['Username'])) {
 
                 <form action="login.php" method="post">
                     <div class="input-group mb-3">
-                        <input type="text" name="Username" class="form-control" placeholder="Username">
+                        <input type="text" name="username" class="form-control" placeholder="username">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -47,7 +47,7 @@ if (isset($_SESSION['Username'])) {
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="Password" name="Password" class="form-control" placeholder="Password">
+                        <input type="password" name="password" class="form-control" placeholder="password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -79,31 +79,32 @@ if (isset($_SESSION['Username'])) {
 
 </html>
 <?php
-$Username = $_POST['Username'] ?? '';
-$Password = $_POST['Password'] ?? '';
+
+$username = $_POST['username'] ?? '';
+$password = $_POST['password'] ?? '';
 
 if (isset($_POST['Login'])) {
 
     $query = mysqli_query($koneksi,
-        "SELECT * FROM users WHERE Username='$Username'");
+        "SELECT * FROM users WHERE username='$username'");
 
     $userquary = mysqli_fetch_array($query);
 
     if ($userquary) {
 
-        if ($Password == $userquary['Password']) {
+        if ($password == $userquary['password']) {
 
-            $_SESSION['Username'] = $userquary['Username'];
+            $_SESSION['username'] = $userquary['username'];
 
             header("Location: index.php");
             exit;
 
         } else {
-            echo "<script>alert('Password salah');</script>";
+       echo "<script>alert('Password salah');</script>";
         }
 
     } else {
-        echo "<script>alert('Username tidak ditemukan');</script>";
+        echo "<script>alert('username tidak ditemukan');</script>";
     }
 }
 ?>
